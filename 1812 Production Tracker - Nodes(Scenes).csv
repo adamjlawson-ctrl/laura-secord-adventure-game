@@ -1,0 +1,37 @@
+Node,Scene,Scene Name,Approx Distance to DeCew,Time Window,Modern Approx Location,Default/Forward View,Leads To (Forward),Forward Node Direction,Notes
+1,Scene 1,Bedroom Interior,~17.5 km?,03:30–04:00,Secord Homestead 2nd floor,1W → 1A,Node 1A / 3,—,Emotional starting point
+2,Scene 1,Kitchen,~17.5 km?,04:00–04:30,Secord Homestead kitchen,2N/2E,Returns to 3 / 1,—,Stealth narrative node
+3,Scene 2,Front Hall,~17.5 km,04:00–04:20,Secord Homestead front hall,3E,Node 4,E,Threshold to outside
+4,Scene 2,Front Yard Gate,~17.4 km,Pre-dawn,Front yard of Secord Home,4N,Node 5,N,First exterior node
+5,Scene 2,Burned Fences Street,~17.3 km,Early dawn,Village edge,5N,Node 6,N,Burned fence line
+6,Scene 2,Field Edge,~17.1 km,Dawn,Farm edge,6W,Node 7,W,First open country
+7,Scene 3,Orchard Path,~15.8 km,06:15–07:00,Orchard region,7W,Node 8,W,Beginning orchard leg
+8,Scene 3,Creek Crossing,~15.2 km,07:00–07:45,Creek base of bench,8W,Node 9,W,First water crossing
+9,Scene 3,Forest Rise,~14.4 km,07:45–08:30,Forest slope,9W,Node 10,W,Entering deeper forest
+10,Scene 4,Ridge Climb Approach,~13.8 km,08:30–09:15,Lower escarpment slope,10W,Node 11,W,Beginning ridge ascent
+11,Scene 4,Mid-Ridge Traverse,~13.0 km,09:15–10:00,Escarpment shelf,11W,Node 12,W,Narrow ridge travel
+12,Scene 4,Upper Ridge Crest,~12.2 km,10:00–10:45,Upper crest,12W,Node 13,W,Ridge crest
+13,Scene 5,Approach to Abandoned Homestead,~11.5 km,10:45–11:15,Woods/field transition,13W,Node 14,W,Old property approach
+14,Scene 5,Old Fire Ring,~11.0 km,11:15–12:15,Upper-bench woods,14W,Node 15,W,Fire ring clearing
+15,Scene 6,Swamp Edge Approach,~10.4 km,12:15–12:45,East wetland edge,15W,Node 16,W,Entering marsh system
+16,Scene 6,Deep Marsh Crossing,~9.7 km,12:45–13:30,Interior wetlands,16W,Node 17,W,Deep marsh
+17,Scene 6,Collapsed Corduroy Road,~9.2 km,13:30–14:00,Southern wetlands,17W,Node 18,W,Dangerous crossing
+18,Scene 7,Hidden Trail Entrance,~8.7 km,14:00–14:30,Transitional woodland,18W,Node 19,W,Hidden trail entrance
+19,Scene 7,Deep Hidden Trail,~8.2 km,14:30–15:00,Interior woodland,19W,Node 20,W,Deep forest tunnel
+20,Scene 7,Forest Clearing & Cook Fire,~7.6 km,15:00–15:30,Forest clearing,20W,Node 21,W,Abandoned cookfire
+21,Scene 8,Gully Overpass Approach,~7.0 km,15:30–16:00,Ravine rim,21W,Node 22,W,Gully approach
+22,Scene 8,Gully Overpass,~6.6 km,16:00–16:30,Ravine overpass,22W,Node 23,W,Narrow crossing
+23,Scene 8,Western Ridge Exit,~6.1 km,16:30–17:00,Ravine exit slope,23W,Node 24,W,Leaving ravine
+24,Scene 9,Western Rise & Meeting Grounds,~5.6 km,17:00–17:20,High woodland shelf,24W,Node 25,W,Meeting area approach
+25,Scene 9,Forest Threshold & First Contact,~5.0 km,17:20–17:35,Woodland near farmland,25W,Node 26,W,Observed territory
+26,Scene 9,First Sight & Careful Approach,~4.5 km,17:35–17:45,Near Indigenous meeting grounds,26W,Node 27,W,Wahsenniyo sighted
+27,Scene 9,Meeting and Escort,~4.0 km,17:45–18:15,Escort zone,27W,Node 28,W,Escort to DeCew
+28,Act III Scene 1,Approaching DeCew Grounds,~0.25–0.4 km,18:20–18:35,Eastern entrance trail,28W,Node 29,W,Near final approach
+29,Act III Scene 1,At the Door of DeCew House,~20–40 m,18:35–18:45,Front grounds,29W,Node 30,W,Final exterior node
+30,Act III Scene 1,The Knock and the Threshold,0 m,18:45–19:00,Main entry,30W,Node 31,—,Threshold scene
+31,Act III Scene 2,Entry Hall,0 m,19:00–19:05,Interior entry hall,31W,Node 32,—,Interior threshold
+32,Act III Scene 2,Officer’s Room,0 m,19:05–19:12,Interior,32W,Node 33,—,FitzGibbon arrives
+33,Act III Scene 2,The Warning Delivered,0 m,19:12–19:20,Command room,33W,Node 34,—,Historic warning
+34,Act III Scene 3,Orders in Motion,0 m,19:20–19:28,Interior hall,34W,Node 35,—,Orders issued
+35,Act III Scene 3,The Grounds Mobilize,0 m,19:28–19:40,Exterior grounds,35W,Node 36,W,Troops mobilizing
+36,Act III Scene 3,Deployment to Field Edge,0 m,19:40–19:55,Western edge,36W,Act III Scene 4,W,Column departs
