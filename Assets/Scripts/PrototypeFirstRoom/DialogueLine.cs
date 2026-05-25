@@ -8,5 +8,6 @@ namespace PrototypeFirstRoom
         public string id;
         public string speaker;
         public string text;
+        public string portraitKey;
     }
 }

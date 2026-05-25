@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PrototypeFirstRoom
 {
@@ -43,8 +44,11 @@ namespace PrototypeFirstRoom
         public const string Node32EntryViewId = "32W";
         public const string Node33WarningCutsceneViewId = "33-WARN";
         public const string Node33EntryViewId = "33W";
-        public const string Node34PlaceholderTarget = "34W";
-        public const string Node34PlaceholderMessage = "Act III Scene 3 not implemented yet: Preparations and Orders begins next.";
+        public const string Node34EntryViewId = "34W";
+        public const string Node35EntryViewId = "35W";
+        public const string Node36EntryViewId = "36W";
+        public const string Node37PlaceholderTarget = "37W";
+        public const string Node37PlaceholderMessage = "Act III Scene 4 not implemented yet: The Night March to Beaver Dams begins next.";
         public const string Alt4CutsceneViewId = "ALT4";
         public const string Alt5CutsceneViewId = "ALT5";
         public const string Alt6CutsceneViewId = "ALT6";
@@ -64,6 +68,7 @@ namespace PrototypeFirstRoom
         public const string MeetingCompleteFlag = "MEETING_COMPLETE";
         public const string Act3Scene1CompleteFlag = "ACT3_SCENE1_COMPLETE";
         public const string Act3Scene2WarningDeliveredFlag = "ACT3_SCENE2_WARNING_DELIVERED";
+        public const string Act3Scene3CompleteFlag = "ACT3_SCENE3_COMPLETE";
         public const string Alt4SeenFlag = "ALT4_SEEN";
         public const string Alt5SeenFlag = "ALT5_SEEN";
         public const string Alt6SeenFlag = "ALT6_SEEN";
@@ -88,7 +93,10 @@ namespace PrototypeFirstRoom
                     viewId = "1N",
                     title = "1N - Bedroom Interior North View",
                     description = "James sleeps lightly. Every sound from below feels too loud.",
-                    backgroundKey = "Bedroom North View",
+                    backgroundKey = "S01_N01_1N",
+                    lightingMood = "Candlelight / Pre-dawn",
+                    overlayColor = new Color(0.58f, 0.36f, 0.18f, 1f),
+                    overlayOpacity = 0.12f,
                     autoLine = "The room is still, but the house below is not.",
                     hotspots = new List<HotspotData>
                     {
@@ -142,7 +150,10 @@ namespace PrototypeFirstRoom
                     viewId = "1E",
                     title = "1E - Wardrobe & Shawl",
                     description = "Ember glow catches the wardrobe and mending table.",
-                    backgroundKey = "Wardrobe & Shawl",
+                    backgroundKey = "S01_N01_1E",
+                    lightingMood = "Ember Glow",
+                    overlayColor = new Color(0.45f, 0.22f, 0.16f, 1f),
+                    overlayOpacity = 0.14f,
                     autoLine = "My shawl hangs ready, though I do not yet know how far I must carry it.",
                     hotspots = new List<HotspotData>
                     {
@@ -189,7 +200,10 @@ namespace PrototypeFirstRoom
                     viewId = "1S",
                     title = "1S - Children's Wall & Keepsakes",
                     description = "The lamplight falls over drawings and little keepsakes.",
-                    backgroundKey = "Children's Keepsakes",
+                    backgroundKey = "S01_N01_1S",
+                    lightingMood = "Lamplight / Family Keepsakes",
+                    overlayColor = new Color(0.40f, 0.28f, 0.20f, 1f),
+                    overlayOpacity = 0.11f,
                     autoLine = "The children's things make the room feel smaller... and the danger larger.",
                     hotspots = new List<HotspotData>
                     {
@@ -250,7 +264,10 @@ namespace PrototypeFirstRoom
                     viewId = "1W",
                     title = "1W - Bedroom Doorway",
                     description = "Warm shadow frames the doorway to the upstairs hall.",
-                    backgroundKey = "Bedroom Doorway",
+                    backgroundKey = "S01_N01_1W",
+                    lightingMood = "Doorway Shadow",
+                    overlayColor = new Color(0.20f, 0.14f, 0.10f, 1f),
+                    overlayOpacity = 0.22f,
                     autoLine = "The hallway waits in shadow. Below it, the soldiers move and speak.",
                     hotspots = new List<HotspotData>
                     {
@@ -293,12 +310,20 @@ namespace PrototypeFirstRoom
                     }
                 },
 
+                // CORRECTED LANDING SPATIAL LOGIC:
+                // From bedroom 1W, player enters 1A-S facing the stairs.
+                // In 1A-S:
+                // - Forward = downstairs to 3E
+                // - Back = bedroom doorway / 1W
+                // - Left = children's rooms / 1A-N
+                // - Right = blank landing wall / placeholder
+                // This prevents the children's rooms from appearing directly behind the bedroom exit.
                 ["1A-S"] = new NodeViewData
                 {
                     viewId = "1A-S",
                     title = "Top of Stairs",
                     description = "The stairwell falls away into shadow. Faint soldier voices rise from below.",
-                    backgroundKey = "Upstairs Landing — Top of Stairs",
+                    backgroundKey = "S01_N1A_1A-S",
                     autoLine = "The landing is colder than the bedroom. Below, the house no longer feels like ours.",
                     hotspots = new List<HotspotData>
                     {
@@ -341,19 +366,23 @@ namespace PrototypeFirstRoom
                     },
                     navigation = new NavigationTargets
                     {
-                        left = "1A-E",
+                        left = "1A-N",
                         right = "1A-W",
-                        back = "1A-N",
+                        back = "1W",
                         forward = Node3FrontHallEntryViewId
                     }
                 },
 
+                // DESIGN NOTE:
+                // 1A-N is the children's-room-facing landing view.
+                // It is reached by turning left from 1A-S in the current gameplay layout.
+                // The name is preserved for data compatibility, but the visual role is "children's rooms to the side of the landing."
                 ["1A-N"] = new NodeViewData
                 {
                     viewId = "1A-N",
                     title = "Toward Children's Rooms",
                     description = "A narrow passage leads toward the children's rooms. The doors are closed, and the house seems to hold its breath.",
-                    backgroundKey = "Upstairs Landing — Children's Rooms",
+                    backgroundKey = "S01_N1A_1A-N",
                     autoLine = "The children's rooms are quiet. Thank God.",
                     hotspots = new List<HotspotData>
                     {
@@ -381,8 +410,8 @@ namespace PrototypeFirstRoom
                     },
                     navigation = new NavigationTargets
                     {
-                        left = "1A-W",
-                        right = "1A-E",
+                        left = string.Empty,
+                        right = "1A-S",
                         back = "1A-S",
                         forward = string.Empty
                     }
@@ -391,25 +420,25 @@ namespace PrototypeFirstRoom
                 ["1A-E"] = new NodeViewData
                 {
                     viewId = "1A-E",
-                    title = "Landing East Wall",
-                    description = "A dim wall of the upper landing. Shadows tremble with each sound from below.",
-                    backgroundKey = "Upstairs Landing — East Wall",
-                    autoLine = "The landing gives no comfort here - only shadow and listening.",
+                    title = "Upstairs Landing — Blank Wall",
+                    description = "A plain plaster wall catches the dim candle spill from the stairwell. Nothing useful lies this way.",
+                    backgroundKey = "Upstairs Landing — Blank Wall",
+                    autoLine = "Only plain plaster and dim spill light. Nothing useful lies this way.",
                     hotspots = new List<HotspotData>
                     {
                         new HotspotData
                         {
-                            id = "1A_E_SHADOW_01",
-                            label = "Wall Shadow",
+                            id = "1A_WALL_01",
+                            label = "Wall Plaster",
                             actionType = "Look",
-                            responseText = "The candlelight turns every small movement into something larger."
+                            responseText = "The wall is plain and cold to the touch. Every sound from below seems to climb through it."
                         }
                     },
                     navigation = new NavigationTargets
                     {
-                        left = "1A-N",
+                        left = "1A-S",
                         right = "1A-S",
-                        back = "1A-W",
+                        back = "1A-S",
                         forward = string.Empty
                     }
                 },
@@ -417,26 +446,34 @@ namespace PrototypeFirstRoom
                 ["1A-W"] = new NodeViewData
                 {
                     viewId = "1A-W",
-                    title = "Landing West Wall",
-                    description = "The hallway narrows near the bedroom door. Behind you is the room you just left.",
-                    backgroundKey = "Upstairs Landing — Bedroom Door",
-                    autoLine = "The bedroom is behind me now. I cannot linger long.",
+                    title = "Upstairs Landing — Blank Wall",
+                    description = "A plain plaster wall catches the dim candle spill from the stairwell. Nothing useful lies this way.",
+                    backgroundKey = "S01_N1A_1A-W",
+                    lightingMood = "Dim landing light / stairwell shadow / candle spill",
+                    autoLine = "Only plain plaster and dim spill light. Nothing useful lies this way.",
                     hotspots = new List<HotspotData>
                     {
                         new HotspotData
                         {
-                            id = "1A_W_BEDROOM_01",
-                            label = "Bedroom Door",
+                            id = "1A_WALL_01",
+                            label = "Wall Plaster",
                             actionType = "Look",
-                            responseText = "James waits inside. But the warning growing below cannot be ignored."
+                            responseText = "The wall is plain and cold to the touch. Every sound from below seems to climb through it."
+                        },
+                        new HotspotData
+                        {
+                            id = "1A_WALL_LIGHT_01",
+                            label = "Lantern Spill",
+                            actionType = "Look",
+                            responseText = "The lantern glow barely reaches this side of the landing."
                         }
                     },
                     navigation = new NavigationTargets
                     {
                         left = "1A-S",
-                        right = "1A-N",
-                        back = "1A-E",
-                        forward = "1W"
+                        right = "1A-S",
+                        back = "1A-S",
+                        forward = string.Empty
                     }
                 },
 
@@ -445,7 +482,7 @@ namespace PrototypeFirstRoom
                     viewId = "3E",
                     title = "Front Hall — Coat Hooks & Window",
                     description = "The lower hall is cramped and tense. Officer gear hangs near the wall, and pale dawn presses against the window.",
-                    backgroundKey = "Front Hall — Coat Hooks & Window",
+                    backgroundKey = "S01_N03_3E",
                     autoLine = "The hall is narrow, but every object in it feels like evidence.",
                     hotspots = new List<HotspotData>
                     {
@@ -495,12 +532,19 @@ namespace PrototypeFirstRoom
                     }
                 },
 
+                // Scene 1 Node 2 Kitchen:
+                // 2N = Hearth & chimney / chimney crack unlock.
+                // 2E = occupation evidence / mess tins / ration slip.
+                // 2S = added rotational continuity view.
+                // 2W = back door and fog / blocked hazard.
+                // Kitchen returns to 3E front hall.
+                // Do not allow exterior exit through 2W during Act I.
                 ["2N"] = new NodeViewData
                 {
                     viewId = "2N",
                     title = "Kitchen — Hearth & Chimney",
                     description = "The kitchen hearth glows low. The room smells of smoke, damp wood, and the soldiers' presence.",
-                    backgroundKey = "Kitchen — Hearth & Chimney",
+                    backgroundKey = "S01_N02_2N",
                     autoLine = "The kitchen is quieter than the hall, but not safer.",
                     hotspots = new List<HotspotData>
                     {
@@ -510,6 +554,13 @@ namespace PrototypeFirstRoom
                             label = "Hearth",
                             actionType = "Look",
                             responseText = "The hearth still holds a little warmth, though the comfort of it feels stolen."
+                        },
+                        new HotspotData
+                        {
+                            id = "2N_HEARTH_02",
+                            label = "Hearth Stones",
+                            actionType = "Look",
+                            responseText = "Ash settles in the cracks between hearth stones, still warm from the long night."
                         },
                         new HotspotData
                         {
@@ -530,6 +581,16 @@ namespace PrototypeFirstRoom
                         },
                         new HotspotData
                         {
+                            id = "2N_CRACK_02",
+                            label = "Chimney Crack (Shadow Line)",
+                            actionType = "Listen",
+                            responseText = "A second seam in the chimney carries fragments of parlour voices through the stone.",
+                            setsFlag = true,
+                            flagName = ChimneyCrackHeardFlag,
+                            flagValue = true
+                        },
+                        new HotspotData
+                        {
                             id = "2N_SHADOWS_01",
                             label = "Parlour Shadows",
                             actionType = "Look",
@@ -540,7 +601,7 @@ namespace PrototypeFirstRoom
                     {
                         left = "2W",
                         right = "2E",
-                        back = "3E",
+                        back = "2S",
                         forward = string.Empty
                     }
                 },
@@ -550,7 +611,7 @@ namespace PrototypeFirstRoom
                     viewId = "2E",
                     title = "Kitchen — Mess Tins & Ration Slip",
                     description = "Military tins and scraps sit where family tools should be. The occupation has left its marks everywhere.",
-                    backgroundKey = "Kitchen — Mess Tins & Ration Slip",
+                    backgroundKey = "S01_N02_2E",
                     autoLine = "Their things are everywhere. Every object says the same thing: this house is occupied.",
                     hotspots = new List<HotspotData>
                     {
@@ -570,6 +631,13 @@ namespace PrototypeFirstRoom
                         },
                         new HotspotData
                         {
+                            id = "2E_CUP_02",
+                            label = "Cup Ring",
+                            actionType = "Look",
+                            responseText = "A dark ring marks where another cup sat not long ago."
+                        },
+                        new HotspotData
+                        {
                             id = "2E_RATION_01",
                             label = "Ration Slip",
                             actionType = "Look",
@@ -577,10 +645,25 @@ namespace PrototypeFirstRoom
                         },
                         new HotspotData
                         {
+                            id = "2E_RATION_02",
+                            label = "Folded Ration Stub",
+                            actionType = "Look",
+                            responseText = "A folded ration stub is tucked under a tin edge, carelessly left behind."
+                        },
+                        new HotspotData
+                        {
                             id = "2E_CRUMBS_01",
                             label = "Crumbs",
                             actionType = "Look",
                             responseText = "Coarse crumbs are pressed into the table grain."
+                        },
+                        new HotspotData
+                        {
+                            id = "2E_HALL_01",
+                            label = "Return to Hall",
+                            actionType = "Exit",
+                            responseText = "The front hall is still open to me from here.",
+                            targetViewId = Node3FrontHallEntryViewId
                         }
                     },
                     navigation = new NavigationTargets
@@ -588,7 +671,7 @@ namespace PrototypeFirstRoom
                         left = "2N",
                         right = "2S",
                         back = "2W",
-                        forward = string.Empty
+                        forward = Node3FrontHallEntryViewId
                     }
                 },
 
@@ -597,7 +680,7 @@ namespace PrototypeFirstRoom
                     viewId = "2W",
                     title = "Kitchen — Back Door & Fog",
                     description = "The back door is dimly outlined by foggy dawn light. Beyond it, the yard is watched.",
-                    backgroundKey = "Kitchen — Back Door & Fog",
+                    backgroundKey = "S01_N02_2W",
                     autoLine = "The back way is too dangerous. Not yet.",
                     hotspots = new List<HotspotData>
                     {
@@ -605,8 +688,8 @@ namespace PrototypeFirstRoom
                         {
                             id = "2W_DOOR_01",
                             label = "Back Door",
-                            actionType = "Look",
-                            responseText = "The back door would be a mistake. Soldiers are outside, and fog hides more than it reveals."
+                            actionType = "Exit",
+                            responseText = "Too exposed. Soldiers are outside. Not this way."
                         },
                         new HotspotData
                         {
@@ -621,6 +704,13 @@ namespace PrototypeFirstRoom
                             label = "Yard Sounds",
                             actionType = "Listen",
                             responseText = "A low voice outside. Then a boot in wet grass. The yard is not safe."
+                        },
+                        new HotspotData
+                        {
+                            id = "2W_SOLDIERS_01",
+                            label = "Distant Soldiers",
+                            actionType = "Listen",
+                            responseText = "Muted soldier voices drift in from beyond the fog-there is no safe opening out here."
                         }
                     },
                     navigation = new NavigationTargets
@@ -635,32 +725,32 @@ namespace PrototypeFirstRoom
                 ["2S"] = new NodeViewData
                 {
                     viewId = "2S",
-                    title = "Kitchen — Work Wall",
-                    description = "The work wall holds the remains of ordinary life: shelves, cloth, tools, and things pushed aside.",
-                    backgroundKey = "Kitchen — Work Wall",
-                    autoLine = "This was once a room of work and meals. Tonight it feels like evidence.",
+                    title = "Kitchen — South Sideboard View",
+                    description = "A supporting south-facing kitchen angle for continuity around the room's sideboard and shelves.",
+                    backgroundKey = "S01_N02_2S",
+                    autoLine = "A quieter slice of the kitchen, where daily order has been unsettled.",
                     hotspots = new List<HotspotData>
                     {
                         new HotspotData
                         {
-                            id = "2S_SHELF_01",
-                            label = "Work Shelf",
+                            id = "2S_SIDEBOARD_01",
+                            label = "Sideboard",
                             actionType = "Look",
-                            responseText = "The shelf is crowded with small necessities, but several things have been moved by unfamiliar hands."
+                            responseText = "The sideboard still holds household items, though a few things are clearly out of place."
                         },
                         new HotspotData
                         {
-                            id = "2S_CLOTH_01",
-                            label = "Cloth Bundle",
+                            id = "2S_SHELVES_01",
+                            label = "Shelves",
                             actionType = "Look",
-                            responseText = "A folded cloth bundle waits near the wall. Someone tried to keep order here."
+                            responseText = "The shelves show signs of hurried handling, as if someone searched in poor light."
                         },
                         new HotspotData
                         {
-                            id = "2S_TABLE_01",
-                            label = "Scraped Table Edge",
+                            id = "2S_DOORWAY_01",
+                            label = "Doorway Edge",
                             actionType = "Look",
-                            responseText = "The table edge is freshly scraped, as if something heavy was dragged across it."
+                            responseText = "From here, the doorway line keeps both the hall and back door in uneasy reach."
                         }
                     },
                     navigation = new NavigationTargets
@@ -675,32 +765,25 @@ namespace PrototypeFirstRoom
                 ["3N"] = new NodeViewData
                 {
                     viewId = "3N",
-                    title = "Front Hall — Interior View",
-                    description = "The dim hall faces inward. Shadows gather where the stair, kitchen, and parlour routes meet.",
-                    backgroundKey = "Front Hall — Interior View",
-                    autoLine = "The house feels smaller down here, with soldiers so close.",
+                    title = "Front Hall — Stair and Wall",
+                    description = "The base of the stairs sits in shadow. Above, the landing fades into darkness while the hall walls hold every whisper.",
+                    backgroundKey = "S01_N03_3N",
+                    autoLine = "The stair and wall narrow the hall into a tight, listening space.",
                     hotspots = new List<HotspotData>
                     {
                         new HotspotData
                         {
                             id = "3N_STAIR_01",
-                            label = "Stair Base",
+                            label = "Stair Shadow",
                             actionType = "Look",
-                            responseText = "The staircase rises toward the bedroom. Every creak from above could betray movement."
+                            responseText = "The stairs climb back toward the landing, swallowed by darkness before the top."
                         },
                         new HotspotData
                         {
-                            id = "3N_CORRIDOR_01",
-                            label = "Narrow Corridor",
-                            actionType = "Look",
-                            responseText = "The corridor forces every sound into one place - boots, whispers, wood, breath."
-                        },
-                        new HotspotData
-                        {
-                            id = "3N_FLOOR_01",
-                            label = "Floorboards",
+                            id = "3N_CREAK_01",
+                            label = "Wall / Floor Creak",
                             actionType = "Listen",
-                            responseText = "The floorboards remember every step. Move carefully."
+                            responseText = "A small creak runs through wall and floorboard together, as if the whole hall is listening."
                         }
                     },
                     navigation = new NavigationTargets
@@ -717,30 +800,23 @@ namespace PrototypeFirstRoom
                     viewId = "3S",
                     title = "Front Hall — Parlour Side",
                     description = "The parlour lies nearby, too dangerous to enter openly. Low voices seem to gather behind the wall.",
-                    backgroundKey = "Front Hall — Parlour Side",
+                    backgroundKey = "S01_N03_3S",
                     autoLine = "Voices from the parlour pull at my attention, but I cannot risk the door.",
                     hotspots = new List<HotspotData>
                     {
                         new HotspotData
                         {
                             id = "3S_PARLOUR_01",
-                            label = "Parlour Door",
-                            actionType = "Look",
-                            responseText = "The parlour is occupied. Entering would be foolish while the soldiers are awake."
+                            label = "Parlour Side",
+                            actionType = "Listen",
+                            responseText = "The parlour side of the hall carries danger in every murmur and shifting board."
                         },
                         new HotspotData
                         {
                             id = "3S_VOICES_01",
-                            label = "Low Voices",
+                            label = "Door Crack / Low Voices",
                             actionType = "Listen",
                             responseText = "Voices murmur beyond the wall - not clear enough to understand from here."
-                        },
-                        new HotspotData
-                        {
-                            id = "3S_CHAIR_01",
-                            label = "Chair Scrape",
-                            actionType = "Listen",
-                            responseText = "A chair scrapes faintly. Someone inside has shifted position."
                         }
                     },
                     navigation = new NavigationTargets
@@ -757,7 +833,7 @@ namespace PrototypeFirstRoom
                     viewId = "3B-N",
                     title = "Parlour Eavesdrop",
                     description = "A tight view through the chimney crack. Three silhouettes sit in the parlour beyond: Brownell, Parker, and Dunbar.",
-                    backgroundKey = "Parlour Eavesdrop — Chimney Crack View",
+                    backgroundKey = "S01_N03B_3B-N",
                     autoLine = "",
                     hotspots = new List<HotspotData>(),
                     navigation = new NavigationTargets
@@ -774,55 +850,64 @@ namespace PrototypeFirstRoom
                         {
                             id = "3B_BROWNELL_01",
                             speaker = "Brownell",
-                            text = "Sit down, Parker. We bring them order, not ruin-though order rarely asks permission."
+                            text = "Sit down, Parker. We bring them order, not ruin-though order rarely asks permission.",
+                            portraitKey = "S01_N03B_P_BROWNELL"
                         },
                         new DialogueLine
                         {
                             id = "3B_PARKER_01",
                             speaker = "Parker",
-                            text = "Order? These folk would hide a full militia under their beds if they could. Give 'em an inch and they bolt."
+                            text = "Order? These folk would hide a full militia under their beds if they could. Give 'em an inch and they bolt.",
+                            portraitKey = "S01_N03B_P_PARKER"
                         },
                         new DialogueLine
                         {
                             id = "3B_DUNBAR_01",
                             speaker = "Dunbar",
-                            text = "I joined to fight soldiers, sir... not frighten families."
+                            text = "I joined to fight soldiers, sir... not frighten families.",
+                            portraitKey = "S01_N03B_P_DUNBAR"
                         },
                         new DialogueLine
                         {
                             id = "3B_PARKER_02",
                             speaker = "Parker",
-                            text = "Oh, hear the lad. Next you'll be saying we should give 'em back their chickens and bread knives."
+                            text = "Oh, hear the lad. Next you'll be saying we should give 'em back their chickens and bread knives.",
+                            portraitKey = "S01_N03B_P_PARKER"
                         },
                         new DialogueLine
                         {
                             id = "3B_BROWNELL_02",
                             speaker = "Brownell",
-                            text = "That's enough. The Colonel expects a clean report by midday. And we will give him one."
+                            text = "That's enough. The Colonel expects a clean report by midday. And we will give him one.",
+                            portraitKey = "S01_N03B_P_BROWNELL"
                         },
                         new DialogueLine
                         {
                             id = "3B_PARKER_03",
                             speaker = "Parker",
-                            text = "Clean report, sir? With powder damp, tents leaking, and half the men sleeping on their feet?"
+                            text = "Clean report, sir? With powder damp, tents leaking, and half the men sleeping on their feet?",
+                            portraitKey = "S01_N03B_P_PARKER"
                         },
                         new DialogueLine
                         {
                             id = "3B_BROWNELL_03",
                             speaker = "Brownell",
-                            text = "Drunk or not, they will march when ordered. We move when the scouting parties return... likely at first light tomorrow. DeCew will not expect us so soon."
+                            text = "Drunk or not, they will march when ordered. We move when the scouting parties return... likely at first light tomorrow. DeCew will not expect us so soon.",
+                            portraitKey = "S01_N03B_P_BROWNELL"
                         },
                         new DialogueLine
                         {
                             id = "3B_DUNBAR_02",
                             speaker = "Dunbar",
-                            text = "Sir... word from the scouts said movement near the woods by DeCew. Could be militia regrouping."
+                            text = "Sir... word from the scouts said movement near the woods by DeCew. Could be militia regrouping.",
+                            portraitKey = "S01_N03B_P_DUNBAR"
                         },
                         new DialogueLine
                         {
                             id = "3B_PARKER_04",
                             speaker = "Parker",
-                            text = "Militia? Ghost stories. Only movement out there is farmers hauling rubbish."
+                            text = "Militia? Ghost stories. Only movement out there is farmers hauling rubbish.",
+                            portraitKey = "S01_N03B_P_PARKER"
                         }
                     },
                     cutsceneReturnViewId = Node2KitchenEntryViewId,
@@ -6243,7 +6328,7 @@ namespace PrototypeFirstRoom
                         left = "33S",
                         right = "33N",
                         back = "33E",
-                        forward = Node34PlaceholderTarget
+                        forward = Node34EntryViewId
                     }
                 },
 
@@ -6364,35 +6449,595 @@ namespace PrototypeFirstRoom
                     }
                 },
 
-                ["3W"] = new NodeViewData
+                ["34W"] = new NodeViewData
                 {
-                    viewId = "3W",
-                    title = "Front Hall — Stair Base",
-                    description = "The stairway rises back toward the landing and bedroom. The way up remains open, but time presses forward.",
-                    backgroundKey = "Front Hall — Stair Base",
-                    autoLine = "The stairs are behind me now. The danger is below and beside me.",
+                    viewId = "34W",
+                    title = "Orders in Motion — FitzGibbon Issues Orders",
+                    description = "FitzGibbon stands at the map table, issuing rapid instructions. A clerk writes furiously while militia men pass through carrying muskets, satchels, and powder horns.",
+                    backgroundKey = "Orders in Motion — FitzGibbon Issues Orders",
+                    autoLine = "The house erupts into motion — every man called, every scout positioned.",
+                    facingDirection = "W",
+                    cameraBearing = 270,
+                    showCompass = false,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:20–10:28 p.m.",
+                    showHistoricalTime = true,
                     hotspots = new List<HotspotData>
                     {
                         new HotspotData
                         {
-                            id = "3W_STAIR_01",
-                            label = "Stair Shadow",
+                            id = "34W_TABLE_01",
+                            label = "Order Table",
                             actionType = "Look",
-                            responseText = "The stairs climb into darkness. Behind them are James and the last quiet corner of the house."
+                            responseText = "British and militia officers coordinated rapid-response patrols based on frontier intelligence."
                         },
                         new HotspotData
                         {
-                            id = "3W_PEG_01",
-                            label = "Wall Peg",
+                            id = "34W_MILITIA_01",
+                            label = "Militia Movement",
                             actionType = "Look",
-                            responseText = "A bare wall peg marks where something familiar once hung."
+                            responseText = "Supplies, arms, and notes move quickly. No wasted motion."
                         },
                         new HotspotData
                         {
-                            id = "3W_SOUND_01",
-                            label = "Sound from Below",
+                            id = "34W_FITZGIBBON_01",
+                            label = "FitzGibbon’s Command",
+                            actionType = "Look",
+                            responseText = "He does not dramatize the warning. He converts it into orders."
+                        },
+                        new HotspotData
+                        {
+                            id = "34W_POWDER_01",
+                            label = "Powder Horns",
+                            actionType = "Look",
+                            responseText = "Powder horns and cartridge boxes are checked at once. The house is becoming a command post in motion."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "34S",
+                        right = "34N",
+                        back = "34E",
+                        forward = Node35EntryViewId
+                    }
+                },
+
+                ["34N"] = new NodeViewData
+                {
+                    viewId = "34N",
+                    title = "Orders in Motion — Clerk’s Station",
+                    description = "A clerk prepares dispatch orders under strong lamplight: one for nearby militia positions, one for scouting parties.",
+                    backgroundKey = "Orders in Motion — Clerk’s Station",
+                    autoLine = "Ink splashes as orders are written — they must leave within minutes.",
+                    facingDirection = "N",
+                    cameraBearing = 0,
+                    showCompass = false,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:20–10:28 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "34N_DISPATCH_01",
+                            label = "Dispatch Notes",
+                            actionType = "Look",
+                            responseText = "Orders are written quickly because every minute may change the field."
+                        },
+                        new HotspotData
+                        {
+                            id = "34N_INK_01",
+                            label = "Ink Splatter",
+                            actionType = "Look",
+                            responseText = "The ink splashes with the speed of the clerk’s hand. The warning is already moving beyond this room."
+                        },
+                        new HotspotData
+                        {
+                            id = "34N_WAX_01",
+                            label = "Sealing Wax",
+                            actionType = "Look",
+                            responseText = "Sealed notes could be carried by runner or rider, depending on urgency and terrain."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "34W",
+                        right = "34E",
+                        back = "34S",
+                        forward = string.Empty
+                    }
+                },
+
+                ["34E"] = new NodeViewData
+                {
+                    viewId = "34E",
+                    title = "Orders in Motion — Satekariwate at the Shutter",
+                    description = "Satekariwate listens through a narrow shutter gap toward the woods. He is still as shadow, but his attention is absolute.",
+                    backgroundKey = "Orders in Motion — Satekariwate at the Shutter",
+                    autoLine = "He listens for threats — even now, he is the night’s early warning.",
+                    facingDirection = "E",
+                    cameraBearing = 90,
+                    showCompass = false,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:20–10:28 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "34E_VIGIL_01",
+                            label = "Flank Vigilance",
+                            actionType = "Look",
+                            responseText = "He listens for threats even now. His silence is part of the defense."
+                        },
+                        new HotspotData
+                        {
+                            id = "34E_SHUTTER_01",
+                            label = "Shutter Gap",
+                            actionType = "Look",
+                            responseText = "The shutter is opened only a crack. Enough to hear the night, not enough to expose the room."
+                        },
+                        new HotspotData
+                        {
+                            id = "34E_WIND_01",
+                            label = "Night Wind",
                             actionType = "Listen",
-                            responseText = "The house carries sound strangely now. The soldiers' voices seem to come from everywhere."
+                            responseText = "The faint night wind carries insects, distant dogs, and the possibility of movement."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "34N",
+                        right = "34S",
+                        back = "34W",
+                        forward = string.Empty
+                    }
+                },
+
+                ["34S"] = new NodeViewData
+                {
+                    viewId = "34S",
+                    title = "Orders in Motion — Wahsenniyo and Taren Prepare",
+                    description = "Wahsenniyo confers quietly with Taren near the edge of the map light. Taren adjusts his gear, already thinking of movement.",
+                    backgroundKey = "Orders in Motion — Wahsenniyo and Taren Prepare",
+                    autoLine = "Their calm is a force of its own — a practiced readiness I envy.",
+                    facingDirection = "S",
+                    cameraBearing = 180,
+                    showCompass = false,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:20–10:28 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "34S_COORD_01",
+                            label = "Scout Coordination",
+                            actionType = "Look",
+                            responseText = "Their calm is a force of its own — practiced readiness under pressure."
+                        },
+                        new HotspotData
+                        {
+                            id = "34S_TAREN_01",
+                            label = "Taren’s Gear",
+                            actionType = "Look",
+                            responseText = "Taren checks his weapon and pack without unnecessary motion."
+                        },
+                        new HotspotData
+                        {
+                            id = "34S_ROUTE_01",
+                            label = "Wahsenniyo’s Route",
+                            actionType = "Look",
+                            responseText = "Wahsenniyo speaks little, but every word seems to place someone on the land."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "34E",
+                        right = "34W",
+                        back = "34N",
+                        forward = string.Empty
+                    }
+                },
+
+                ["35W"] = new NodeViewData
+                {
+                    viewId = "35W",
+                    title = "The Grounds Mobilize — Main Grounds",
+                    description = "Outside DeCew House, controlled lantern light catches militia movement, dispatch preparation, and scouts taking position along the yard edge.",
+                    backgroundKey = "The Grounds Mobilize — Main Grounds",
+                    autoLine = "Everything moves at once — orders, horses, men, scouts. The warning has set the whole house in motion.",
+                    facingDirection = "W",
+                    cameraBearing = 270,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:28–10:40 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "35W_LANTERN_01",
+                            label = "Controlled Lantern Light",
+                            actionType = "Look",
+                            responseText = "Lanterns would likely have been kept low and controlled near an active outpost — enough light for preparation, not enough to advertise movement outside."
+                        },
+                        new HotspotData
+                        {
+                            id = "35W_FORMUP_01",
+                            label = "Militia Form-Up",
+                            actionType = "Look",
+                            responseText = "Small detachments and scouts could move more quickly than large formations, especially through wooded Niagara terrain."
+                        },
+                        new HotspotData
+                        {
+                            id = "35W_FITZGIBBON_01",
+                            label = "FitzGibbon Acting",
+                            actionType = "Look",
+                            responseText = "FitzGibbon shifts from receiving the warning to issuing immediate direction for a rapid response."
+                        },
+                        new HotspotData
+                        {
+                            id = "35W_RECONSTRUCTION_01",
+                            label = "Historical Reconstruction",
+                            actionType = "Look",
+                            responseText = "Laura Secord’s warning to FitzGibbon is historically central to the events leading to Beaver Dams. The exact minute-by-minute activity at DeCew House is reconstructed here from plausible outpost behavior, allied scouting needs, and rapid military response."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "35S",
+                        right = "35N",
+                        back = "35E",
+                        forward = Node36EntryViewId
+                    }
+                },
+
+                ["35N"] = new NodeViewData
+                {
+                    viewId = "35N",
+                    title = "The Grounds Mobilize — Horse Line and Runners",
+                    description = "Runners check dispatch notes while horses are steadied nearby for movement where terrain permits.",
+                    backgroundKey = "The Grounds Mobilize — Horse Line and Runners",
+                    autoLine = "Runners and horses prepare in parallel — orders must travel quickly into the night.",
+                    facingDirection = "N",
+                    cameraBearing = 0,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:28–10:40 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "35N_RUNNER_01",
+                            label = "Runners Preparing",
+                            actionType = "Look",
+                            responseText = "At an active outpost, messengers could be readied quickly to carry written or spoken orders between positions."
+                        },
+                        new HotspotData
+                        {
+                            id = "35N_HORSE_01",
+                            label = "Horse Line",
+                            actionType = "Look",
+                            responseText = "Horses may have been prepared for faster dispatch where routes allowed, while other messages would likely go on foot."
+                        },
+                        new HotspotData
+                        {
+                            id = "35N_WAX_01",
+                            label = "Sealed Dispatch",
+                            actionType = "Look",
+                            responseText = "In frontier conditions, notes could be sealed and handed off quickly for a rapid response across scattered positions."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "35W",
+                        right = "35E",
+                        back = "35S",
+                        forward = string.Empty
+                    }
+                },
+
+                ["35E"] = new NodeViewData
+                {
+                    viewId = "35E",
+                    title = "The Grounds Mobilize — Scout Assembly",
+                    description = "Allied scouts gather in low light near the yard edge, speaking briefly and preparing to move by quieter routes.",
+                    backgroundKey = "The Grounds Mobilize — Scout Assembly",
+                    autoLine = "Scouts assemble in near silence, preparing to move before larger bodies can follow.",
+                    facingDirection = "E",
+                    cameraBearing = 90,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:28–10:40 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "35E_SCOUT_01",
+                            label = "Scout Assembly",
+                            actionType = "Look",
+                            responseText = "Indigenous scouts could gather quietly at the edge of light, ready to move ahead of larger detachments."
+                        },
+                        new HotspotData
+                        {
+                            id = "35E_SIGNAL_01",
+                            label = "Quiet Signals",
+                            actionType = "Look",
+                            responseText = "Near an active outpost, silent signals would likely have been preferred over raised voices once movement began."
+                        },
+                        new HotspotData
+                        {
+                            id = "35E_TREE_01",
+                            label = "Tree Line",
+                            actionType = "Look",
+                            responseText = "The edge of the woods offers cover and listening ground for scouts preparing routes in the dark."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "35N",
+                        right = "35S",
+                        back = "35W",
+                        forward = string.Empty
+                    }
+                },
+
+                ["35S"] = new NodeViewData
+                {
+                    viewId = "35S",
+                    title = "The Grounds Mobilize — Wahsenniyo and FitzGibbon Coordination",
+                    description = "Wahsenniyo and FitzGibbon confer at the edge of lantern light, matching land knowledge to immediate command decisions.",
+                    backgroundKey = "The Grounds Mobilize — Wahsenniyo and FitzGibbon Coordination",
+                    autoLine = "Command and land knowledge align here — urgency without confusion.",
+                    facingDirection = "S",
+                    cameraBearing = 180,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:28–10:40 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "35S_COORD_01",
+                            label = "Shared Planning",
+                            actionType = "Look",
+                            responseText = "Wahsenniyo and FitzGibbon coordinate quickly — command intent and land knowledge working together for a rapid response."
+                        },
+                        new HotspotData
+                        {
+                            id = "35S_TAREN_01",
+                            label = "Taren Preparing",
+                            actionType = "Look",
+                            responseText = "Taren checks his gear with practiced economy, ready for movement once direction is given."
+                        },
+                        new HotspotData
+                        {
+                            id = "35S_ROUTE_01",
+                            label = "Route Talk",
+                            actionType = "Look",
+                            responseText = "Likely routes are weighed for cover, speed, and how quickly scouts can relay what they find."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "35E",
+                        right = "35W",
+                        back = "35N",
+                        forward = string.Empty
+                    }
+                },
+
+                ["36W"] = new NodeViewData
+                {
+                    viewId = "36W",
+                    title = "Deployment — Forming the Night Column",
+                    description = "Militia men form into a loose night column at the edge of the field. FitzGibbon stands near the front with his lantern shielded, checking final positions. Wahsenniyo and the allied scouts gather just off the flank.",
+                    backgroundKey = "Deployment — Forming the Night Column",
+                    autoLine = "This is the moment… when everything learned tonight becomes action.",
+                    facingDirection = "W",
+                    cameraBearing = 270,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:40–10:55 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "36W_PATH_01",
+                            label = "Path Into Darkness",
+                            actionType = "Look",
+                            responseText = "Allied troops moved without torches when secrecy mattered — trusting scouts, moonlight, and familiarity with the land rather than giving away position."
+                        },
+                        new HotspotData
+                        {
+                            id = "36W_SCOUTS_01",
+                            label = "Scout Line",
+                            actionType = "Look",
+                            responseText = "The scouts lead the way — silent, certain, and ahead of every footfall."
+                        },
+                        new HotspotData
+                        {
+                            id = "36W_FITZGIBBON_01",
+                            label = "FitzGibbon’s Final Check",
+                            actionType = "Look",
+                            responseText = "FitzGibbon checks positions quickly. The warning is no longer being discussed — it is being acted upon."
+                        },
+                        new HotspotData
+                        {
+                            id = "36W_COLUMN_01",
+                            label = "Night Column",
+                            actionType = "Look",
+                            responseText = "A loose night column can move more quietly than a crowded formation, especially near woods and uneven ground."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "36S",
+                        right = "36N",
+                        back = "36E",
+                        forward = Node37PlaceholderTarget
+                    }
+                },
+
+                ["36N"] = new NodeViewData
+                {
+                    viewId = "36N",
+                    title = "Deployment — Ridge-Facing Trees",
+                    description = "Tree silhouettes rise toward the northern ridge. The scouts study the slope without speaking.",
+                    backgroundKey = "Deployment — Ridge-Facing Trees",
+                    autoLine = "Those trees hide routes only the scouts truly know.",
+                    facingDirection = "N",
+                    cameraBearing = 0,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:40–10:55 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "36N_RIDGE_01",
+                            label = "Ridge Path Hint",
+                            actionType = "Look",
+                            responseText = "Those trees hide routes only the scouts truly know."
+                        },
+                        new HotspotData
+                        {
+                            id = "36N_CANOPY_01",
+                            label = "Dark Canopy",
+                            actionType = "Look",
+                            responseText = "The canopy swallows light quickly. Anyone moving there without knowledge would lose direction."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "36W",
+                        right = "36E",
+                        back = "36S",
+                        forward = string.Empty
+                    }
+                },
+
+                ["36E"] = new NodeViewData
+                {
+                    viewId = "36E",
+                    title = "Deployment — Final Look at DeCew House",
+                    description = "DeCew House glows dimly behind the assembling column. Movement continues inside, steady and purposeful.",
+                    backgroundKey = "Deployment — Final Look at DeCew House",
+                    autoLine = "The house that held my warning… now prepares its defenders.",
+                    facingDirection = "E",
+                    cameraBearing = 90,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:40–10:55 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "36E_LANTERN_01",
+                            label = "Shaded Lanterns",
+                            actionType = "Look",
+                            responseText = "Lanterns would likely be shaded or controlled near the outpost, preserving enough light for work without exposing the house more than necessary."
+                        },
+                        new HotspotData
+                        {
+                            id = "36E_HOUSE_01",
+                            label = "House in Motion",
+                            actionType = "Look",
+                            responseText = "The house that held my warning now prepares its defenders."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "36N",
+                        right = "36S",
+                        back = "36W",
+                        forward = string.Empty
+                    }
+                },
+
+                ["36S"] = new NodeViewData
+                {
+                    viewId = "36S",
+                    title = "Deployment — Gear and Provisions Check",
+                    description = "A small cluster of militia men check belts, bayonets, powder bags, and straps. Every movement is quiet and practiced.",
+                    backgroundKey = "Deployment — Gear and Provisions Check",
+                    autoLine = "Every strap and pouch must be perfect — darkness punishes mistakes.",
+                    facingDirection = "S",
+                    cameraBearing = 180,
+                    showCompass = true,
+                    historicalDate = "June 22, 1813",
+                    localTimeWindow = "10:40–10:55 p.m.",
+                    showHistoricalTime = true,
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "36S_GEAR_01",
+                            label = "Gear Check",
+                            actionType = "Look",
+                            responseText = "Every strap and pouch must be checked before moving in darkness. Small mistakes become dangerous at night."
+                        },
+                        new HotspotData
+                        {
+                            id = "36S_POWDER_01",
+                            label = "Powder Bags",
+                            actionType = "Look",
+                            responseText = "Powder had to stay dry and accessible. Dampness, darkness, and haste were a bad combination."
+                        },
+                        new HotspotData
+                        {
+                            id = "36S_QUIET_01",
+                            label = "Quiet Preparation",
+                            actionType = "Listen",
+                            responseText = "The preparation is quiet by necessity. Loud readiness would defeat itself."
+                        }
+                    },
+                    navigation = new NavigationTargets
+                    {
+                        left = "36E",
+                        right = "36W",
+                        back = "36N",
+                        forward = string.Empty
+                    }
+                },
+
+                ["3W"] = new NodeViewData
+                {
+                    viewId = "3W",
+                    title = "Front Hall — Toward Kitchen",
+                    description = "The hallway angles toward the kitchen side, where dim light and occupied silence mingle.",
+                    backgroundKey = "S01_N03_3W",
+                    autoLine = "The kitchen side of the hall offers movement, but every board could betray me.",
+                    hotspots = new List<HotspotData>
+                    {
+                        new HotspotData
+                        {
+                            id = "3W_KITCHEN_01",
+                            label = "Kitchen Passage",
+                            actionType = "Look",
+                            responseText = "The passage toward the kitchen is narrow and exposed, but it remains passable."
+                        },
+                        new HotspotData
+                        {
+                            id = "3W_FLOOR_01",
+                            label = "Floorboards",
+                            actionType = "Look",
+                            responseText = "The floorboards are worn smooth by years of traffic and tonight they answer every step."
+                        },
+                        new HotspotData
+                        {
+                            id = "3W_EXIT_01",
+                            label = "Kitchen Exit",
+                            actionType = "Exit",
+                            responseText = "The kitchen side offers a brief opening to slip through.",
+                            targetViewId = Node2KitchenEntryViewId
                         }
                     },
                     navigation = new NavigationTargets

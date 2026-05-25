@@ -1,0 +1,23 @@
+Scene 01 Node 03 - Front Hall slots and mapping
+
+Expected image filenames:
+- Scene01_Node03_3E_Coat_Hooks_Window.png
+- Scene01_Node03_3N_Stair_and_Wall.png
+- Scene01_Node03_3S_Parlour_Side_Hall.png
+- Scene01_Node03_3W_Toward_Kitchen.png
+
+Background keys:
+- S01_N03_3E
+- S01_N03_3N
+- S01_N03_3S
+- S01_N03_3W
+
+Mapping:
+- S01_N03_3E -> Scene01_Node03_3E_Coat_Hooks_Window.png
+- S01_N03_3N -> Scene01_Node03_3N_Stair_and_Wall.png
+- S01_N03_3S -> Scene01_Node03_3S_Parlour_Side_Hall.png
+- S01_N03_3W -> Scene01_Node03_3W_Toward_Kitchen.png
+
+Note:
+- Missing images should use existing placeholder background behavior until art is imported.
+- One-time missing sprite warnings are expected in development/editor builds.

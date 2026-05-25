@@ -1,0 +1,25 @@
+Scene 1 / Node 3B Parlour Eavesdrop Canonical Mapping
+
+Folder:
+Assets/Game/Art/Backgrounds/Scene01_Node03B_ParlourEavesdrop/
+
+Canonical files:
+- Scene01_Node03B_3B-N_Parlour_Eavesdrop.png
+- Scene01_Node03B_Officer_Standard.png
+- Scene01_Node03B_Officer_Senior.png
+- Scene01_Node03B_Officer_Young.png
+
+Runtime key mapping:
+- S01_N03B_3B-N -> Scene01_Node03B_3B-N_Parlour_Eavesdrop.png
+- S01_N03B_P_BROWNELL -> Scene01_Node03B_Officer_Senior.png
+- S01_N03B_P_PARKER -> Scene01_Node03B_Officer_Standard.png
+- S01_N03B_P_DUNBAR -> Scene01_Node03B_Officer_Young.png
+
+Speaker mapping used by Node 3B dialogue lines:
+- Brownell -> S01_N03B_P_BROWNELL
+- Parker -> S01_N03B_P_PARKER
+- Dunbar -> S01_N03B_P_DUNBAR
+
+Notes:
+- Keep import type as Sprite (2D and UI).
+- If .meta files are missing after copy/rename, open Unity to generate metas.

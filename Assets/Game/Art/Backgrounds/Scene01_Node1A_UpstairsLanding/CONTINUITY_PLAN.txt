@@ -1,0 +1,46 @@
+Scene 01 Node 1A - Upstairs Landing Continuity Plan
+
+Purpose
+- Prep-only integration pass for next graphics set.
+- Keep gameplay logic, navigation, story text, and Node 1 assets unchanged.
+
+Visual Anchor
+- Anchor from Scene 01 Node 1 view 1W (Bedroom Doorway).
+- 1A-S must read as stepping out from 1W into the upstairs landing.
+
+Expected Art Files (to be created/imported next)
+- Scene01_Node1A_1A-S_Top_of_Stairs.png
+- Scene01_Node1A_1A-N_Children_Rooms.png
+
+Background Key Mapping
+- S01_N1A_1A-S -> Scene01_Node1A_1A-S_Top_of_Stairs.png
+- S01_N1A_1A-N -> Scene01_Node1A_1A-N_Children_Rooms.png
+
+View Intent
+- 1A-S (Top of Stairs):
+  - Narrow upstairs landing.
+  - Stairwell descending into darkness.
+  - Faint warm glow from below.
+  - Candle stub, sewing basket, floorboards, shadowed railing/banister.
+  - Tension from soldiers below, but no visible soldiers.
+- 1A-N (Toward Children's Rooms):
+  - Reverse orientation on the same landing.
+  - Children's room door or doors, small toy, creaking floorboard area.
+  - Dim landing light.
+  - Stairwell not the main focus.
+  - Bedroom interior not the main focus.
+
+Art Guardrails
+- Do not invent a large hallway.
+- Do not invent a modern staircase.
+- Do not add extra bedroom space as the main composition.
+
+Hotspot Mapping Prep Scope
+- Prepare mapped hotspots for 1A-S and 1A-N only.
+- Placeholder normalized rectangles are in UI code and must be tuned after final images are imported.
+
+Out of Scope for This Pass
+- No final slots for 1A-E and 1A-W unless later required by gameplay.
+- No story additions.
+- No navigation changes.
+- No Node 1 background or hotspot mapping changes.
